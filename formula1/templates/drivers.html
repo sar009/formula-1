@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include "header_resource.html" %}
+    </head>
+    <body class="skin-black">
+    	{% include "header.html" %}
+        <div class="wrapper row-offcanvas row-offcanvas-left">
+			{% include "sidebar.html" %}
+            <aside class="right-side">                
+                <section class="content-header">
+                    <h1>Drivers</h1>
+                </section>
+                <section class="content" ng-app="f1" ng-controller="f1" data-ng-init="getDriversByYear()">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">
+                                Drivers Championship Standings - 
+                                <select class="btn" ng-change='getDriversByYear()' ng-model='championshipYear' ng-options='year for year in championshipYears'>
+                                </select>
+                            </h3>
+                            <div class="searchHolder">
+                                <input type="text" ng-model="nameFilter" placeholder="Search..."/>
+                            </div>
+                        </div>
+                        <div class="box-body table-responsive">
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>sr no.</th>
+                                        <th>Driver</th>
+                                        <th>Team</th>
+                                        <th>Points</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% verbatim %}
+                                        <tr ng-repeat="driver in driversList | filter: driverFilter">
+                                            <td> {{ $index + 1 }} </td>
+                                            <td> {{ driver.Driver.givenName }} {{ driver.Driver.familyName }} </td>
+                                            <td> {{ driver.Constructors[0].name }} </td>
+                                            <td> {{ driver.points }} </td>
+                                        </tr>
+                                    {% endverbatim %}
+                                    <tr ng-show="loader && driversList == null">
+                                        <td colspan="4" class = "loading-symbol"><i class="fa fa-refresh fa-spin"></i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </aside>
+        </div>
+		{% include "footer_resource.html" %}
+    </body>
+</html>

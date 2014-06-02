@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include "header_resource.html" %}
+    </head>
+    <body class="skin-black">
+    	{% include "header.html" %}
+        <div class="wrapper row-offcanvas row-offcanvas-left">
+			{% include "sidebar.html" %}
+            <aside class="right-side">
+                <section class="content-header">
+                    <h1>Teams</h1>
+                </section>
+                <section class="content" ng-app="f1" ng-controller='f1' data-ng-init="getTeamsByYear()">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">
+                                Constructors Championship Standings
+                                <select class="btn" ng-change = 'getTeamsByYear()' ng-model='championshipYear' ng-options='year for year in championshipYears'></select>
+                            </h3>
+                        </div>
+                        <div class="box-body table-responsive">
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>sr no.</th>
+                                        <th>Team</th>
+                                        <th>Wins</th>
+                                        <th>Points</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% verbatim %}
+                                        <tr ng-repeat="team in teamsList">
+                                            <td> {{ $index + 1 }} </td>
+                                            <td> {{ team.Constructor.name }}</td>
+                                            <td> {{ team.wins }} </td>
+                                            <td> {{ team.points }} </td>
+                                        </tr>
+                                    {% endverbatim %}
+                                    <tr ng-show="loader && teamsList == null">
+                                        <td colspan="4" class = "loading-symbol"><i class="fa fa-refresh fa-spin"></i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </aside>
+        </div>
+		{% include "footer_resource.html" %}
+    </body>
+</html>

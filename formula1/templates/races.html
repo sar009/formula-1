@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include "header_resource.html" %}
+    </head>
+    <body class="skin-black">
+    	{% include "header.html" %}
+        <div class="wrapper row-offcanvas row-offcanvas-left">
+			{% include "sidebar.html" %}
+            <aside class="right-side">                
+                <section class="content-header">
+                    <h1>Races</h1>
+                </section>
+                <section class="content" ng-app="f1" ng-controller='f1' data-ng-init="getRacesByYear()">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">
+                                Race Calendar 
+                                <select class="btn" ng-change='getRacesByYear()' ng-model='championshipYear' ng-options='year for year in championshipYears'></select>
+                            </h3>                                    
+                        </div>
+                        <div class="box-body table-responsive">
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>sr no.</th>
+                                        <th>Grand Prix</th>
+                                        <th>Circuit</th>
+                                        <th>Date</th>
+                                        <th>Country</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% verbatim %}
+                                        <tr ng-repeat="race in racesList">
+                                            <td> {{ $index + 1 }} </td>
+                                            <td> {{ race.raceName }}</td>
+                                            <td> {{ race.Circuit.circuitName }} </td>
+                                            <td> {{ race.date }} </td>
+                                            <td> {{ race.Circuit.Location.country }} </td>
+                                        </tr>
+                                    {% endverbatim %}
+                                    <tr ng-show="loader && racesList == null">
+                                        <td colspan="5" class = "loading-symbol"><i class="fa fa-refresh fa-spin"></i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </aside>
+        </div>
+		{% include "footer_resource.html" %}
+    </body>
+</html>
